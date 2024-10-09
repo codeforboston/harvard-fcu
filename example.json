@@ -1,0 +1,320 @@
+{
+    "result": {
+        "input": {
+            "address": {
+                "zip": "02152",
+                "city": "winthrop,",
+                "street": "148 winthropshore drive",
+                "state": "ma"
+            },
+            "vintage": {
+                "isDefault": true,
+                "id": "2020",
+                "vintageName": "Census2020_Census2020",
+                "vintageDescription": "Census 2020 Vintage - Census 2020 Benchmark"
+            },
+            "benchmark": {
+                "isDefault": false,
+                "benchmarkDescription": "Public Address Ranges - Census 2020 Benchmark",
+                "id": "2020",
+                "benchmarkName": "Public_AR_Census2020"
+            }
+        },
+        "addressMatches": [
+            {
+                "tigerLine": {
+                    "side": "L",
+                    "tigerLineId": "85715004"
+                },
+                "geographies": {
+                    "State Legislative Districts - Upper": [
+                        {
+                            "POP100": 197275,
+                            "GEOID": "25027",
+                            "CENTLAT": "+42.3873474",
+                            "AREAWATER": 37914872,
+                            "STATE": "25",
+                            "BASENAME": "First Suffolk & Middlesex",
+                            "OID": "212904693077241",
+                            "LSADC": "07",
+                            "SLDU": "027",
+                            "FUNCSTAT": "N",
+                            "INTPTLAT": "+42.3864130",
+                            "NAME": "First Suffolk & Middlesex District",
+                            "OBJECTID": 1484,
+                            "CENTLON": "-070.9992975",
+                            "LSY": "2018",
+                            "HU100": 88793,
+                            "AREALAND": 38927619,
+                            "INTPTLON": "-070.9995043",
+                            "MTFCC": "G5210",
+                            "LDTYP": "O"
+                        }
+                    ],
+                    "States": [
+                        {
+                            "STATENS": "00606926",
+                            "POP100": 7029917,
+                            "GEOID": "25",
+                            "CENTLAT": "+42.1618490",
+                            "AREAWATER": 7130653806,
+                            "STATE": "25",
+                            "BASENAME": "Massachusetts",
+                            "STUSAB": "MA",
+                            "OID": "27490203627104",
+                            "LSADC": "00",
+                            "FUNCSTAT": "A",
+                            "INTPTLAT": "+42.1565196",
+                            "DIVISION": "1",
+                            "NAME": "Massachusetts",
+                            "REGION": "1",
+                            "OBJECTID": 10,
+                            "CENTLON": "-071.4975238",
+                            "AREALAND": 20204396898,
+                            "INTPTLON": "-071.4895915",
+                            "HU100": 2998537,
+                            "MTFCC": "G4000",
+                            "UR": "M"
+                        }
+                    ],
+                    "Combined Statistical Areas": [
+                        {
+                            "POP100": 8466186,
+                            "GEOID": "148",
+                            "CENTLAT": "+42.3593610",
+                            "AREAWATER": 7170162236,
+                            "BASENAME": "Boston-Worcester-Providence, MA-RI-NH-CT",
+                            "OID": "2619013782255090",
+                            "LSADC": "M0",
+                            "FUNCSTAT": "S",
+                            "INTPTLAT": "+42.3619187",
+                            "NAME": "Boston-Worcester-Providence, MA-RI-NH-CT CSA",
+                            "CSA": "148",
+                            "OBJECTID": 83,
+                            "CENTLON": "-071.2719973",
+                            "HU100": 3604952,
+                            "AREALAND": 25128574279,
+                            "INTPTLON": "-071.2724983",
+                            "MTFCC": "G3100"
+                        }
+                    ],
+                    "2020 Urban Areas - Corrected": [
+                        {
+                            "GEOID": "09271",
+                            "CENTLAT": "+42.3794881",
+                            "AREAWATER": 185677268,
+                            "BASENAME": "Boston, MA--NH",
+                            "OID": "27021206517502",
+                            "UA": "09271",
+                            "LSADC": "67",
+                            "FUNCSTAT": "S",
+                            "INTPTLAT": "+42.3789986",
+                            "NAME": "Boston, MA--NH Urban Area",
+                            "OBJECTID": 407,
+                            "CENTLON": "-071.1422204",
+                            "AREALAND": 4288728505,
+                            "INTPTLON": "-071.1423438",
+                            "MTFCC": "G3500"
+                        }
+                    ],
+                    "County Subdivisions": [
+                        {
+                            "COUSUB": "81005",
+                            "POP100": 19316,
+                            "GEOID": "2502581005",
+                            "CENTLAT": "+42.3794264",
+                            "AREAWATER": 16390807,
+                            "STATE": "25",
+                            "BASENAME": "Winthrop Town",
+                            "OID": "27690210186996",
+                            "LSADC": "25",
+                            "FUNCSTAT": "F",
+                            "INTPTLAT": "+42.3755413",
+                            "NAME": "Winthrop Town city",
+                            "OBJECTID": 19139,
+                            "CENTLON": "-070.9657255",
+                            "COUSUBCC": "C5",
+                            "HU100": 8821,
+                            "AREALAND": 5155473,
+                            "INTPTLON": "-070.9706464",
+                            "MTFCC": "G4040",
+                            "COUSUBNS": "00618335",
+                            "UR": "U",
+                            "COUNTY": "025"
+                        }
+                    ],
+                    "State Legislative Districts - Lower": [
+                        {
+                            "POP100": 47556,
+                            "GEOID": "25202",
+                            "CENTLAT": "+42.3864294",
+                            "SLDL": "202",
+                            "AREAWATER": 18528343,
+                            "STATE": "25",
+                            "BASENAME": "19th Suffolk",
+                            "OID": "213904693077449",
+                            "LSADC": "07",
+                            "FUNCSTAT": "N",
+                            "INTPTLAT": "+42.3866324",
+                            "NAME": "19th Suffolk District",
+                            "OBJECTID": 4608,
+                            "CENTLON": "-070.9722615",
+                            "LSY": "2018",
+                            "HU100": 19999,
+                            "AREALAND": 10194866,
+                            "INTPTLON": "-070.9726169",
+                            "MTFCC": "G5220",
+                            "LDTYP": "O"
+                        }
+                    ],
+                    "Incorporated Places": [
+                        {
+                            "NECTAPCI": "N",
+                            "POP100": 19316,
+                            "GEOID": "2581005",
+                            "CENTLAT": "+42.3794264",
+                            "AREAWATER": 16390807,
+                            "STATE": "25",
+                            "BASENAME": "Winthrop Town",
+                            "OID": "278903710002257",
+                            "LSADC": "25",
+                            "PLACE": "81005",
+                            "FUNCSTAT": "A",
+                            "INTPTLAT": "+42.3755413",
+                            "NAME": "Winthrop Town city",
+                            "OBJECTID": 13511,
+                            "PLACECC": "C5",
+                            "CENTLON": "-070.9657255",
+                            "CBSAPCI": "N",
+                            "HU100": 8821,
+                            "AREALAND": 5155473,
+                            "INTPTLON": "-070.9706464",
+                            "PLACENS": "00618335",
+                            "MTFCC": "G4110",
+                            "UR": "U"
+                        }
+                    ],
+                    "Counties": [
+                        {
+                            "POP100": 797936,
+                            "GEOID": "25025",
+                            "CENTLAT": "+42.3487288",
+                            "AREAWATER": 160498380,
+                            "STATE": "25",
+                            "BASENAME": "Suffolk",
+                            "OID": "27590210166934",
+                            "LSADC": "06",
+                            "FUNCSTAT": "N",
+                            "INTPTLAT": "+42.3385513",
+                            "NAME": "Suffolk County",
+                            "OBJECTID": 146,
+                            "CENTLON": "-070.9857068",
+                            "COUNTYCC": "H4",
+                            "COUNTYNS": "00606939",
+                            "AREALAND": 150876727,
+                            "INTPTLON": "-071.0182530",
+                            "HU100": 349616,
+                            "MTFCC": "G4020",
+                            "UR": "M",
+                            "COUNTY": "025"
+                        }
+                    ],
+                    "116th Congressional Districts": [
+                        {
+                            "POP100": 794966,
+                            "GEOID": "2505",
+                            "CENTLAT": "+42.3566771",
+                            "CDSESSN": "116",
+                            "AREAWATER": 58451503,
+                            "STATE": "25",
+                            "BASENAME": "5",
+                            "OID": "211904690191857",
+                            "LSADC": "C2",
+                            "FUNCSTAT": "N",
+                            "INTPTLAT": "+42.3553663",
+                            "NAME": "Congressional District 5",
+                            "OBJECTID": 344,
+                            "CENTLON": "-071.2981547",
+                            "HU100": 328550,
+                            "AREALAND": 686684971,
+                            "INTPTLON": "-071.2984404",
+                            "CD116": "05",
+                            "MTFCC": "G5200"
+                        }
+                    ],
+                    "Census Tracts": [
+                        {
+                            "POP100": 4089,
+                            "GEOID": "25025180500",
+                            "CENTLAT": "+42.3672098",
+                            "AREAWATER": 2387274,
+                            "STATE": "25",
+                            "BASENAME": "1805",
+                            "OID": "20790210232777",
+                            "LSADC": "CT",
+                            "FUNCSTAT": "S",
+                            "INTPTLAT": "+42.3674141",
+                            "NAME": "Census Tract 1805",
+                            "OBJECTID": 6833,
+                            "TRACT": "180500",
+                            "CENTLON": "-070.9711784",
+                            "HU100": 2000,
+                            "AREALAND": 823354,
+                            "INTPTLON": "-070.9715805",
+                            "MTFCC": "G5020",
+                            "UR": "U",
+                            "COUNTY": "025"
+                        }
+                    ],
+                    "Census Blocks": [
+                        {
+                            "SUFFIX": "",
+                            "POP100": 115,
+                            "GEOID": "250251805001008",
+                            "CENTLAT": "+42.3769562",
+                            "BLOCK": "1008",
+                            "AREAWATER": 0,
+                            "STATE": "25",
+                            "BASENAME": "1008",
+                            "OID": "210701007748772",
+                            "LSADC": "BK",
+                            "INTPTLAT": "+42.3769562",
+                            "FUNCSTAT": "S",
+                            "NAME": "Block 1008",
+                            "OBJECTID": 788697,
+                            "TRACT": "180500",
+                            "CENTLON": "-070.9729630",
+                            "BLKGRP": "1",
+                            "AREALAND": 13885,
+                            "HU100": 63,
+                            "INTPTLON": "-070.9729630",
+                            "MTFCC": "G5040",
+                            "LWBLKTYP": "L",
+                            "UR": "U",
+                            "COUNTY": "025"
+                        }
+                    ]
+                },
+                "coordinates": {
+                    "x": -70.9719443644375,
+                    "y": 42.3773738955706
+                },
+                "addressComponents": {
+                    "zip": "02152",
+                    "streetName": "WINTHROP SHORE",
+                    "preType": "",
+                    "city": "WINTHROP",
+                    "preDirection": "",
+                    "suffixDirection": "",
+                    "fromAddress": "144",
+                    "state": "MA",
+                    "suffixType": "DR",
+                    "toAddress": "150",
+                    "suffixQualifier": "",
+                    "preQualifier": ""
+                },
+                "matchedAddress": "148 WINTHROP SHORE DR, WINTHROP, MA, 02152"
+            }
+        ]
+    }
+}
