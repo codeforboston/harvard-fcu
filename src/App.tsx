@@ -1,40 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+
+import EligibilityResponse from './components/EligibilityResponse';
+
+type EligibilityResponseLoadingStates = "default" | "loading" | "complete" | "error";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [inputValue, setInputValue] = useState<string>("Placeholder...")
+ 
+  const [inputValue, setInputValue] = useState<string>("Placeholder...");
+  const [validResponse, setValidResponse] = useState<boolean>(false);
+  const [eligibilityResponseLoadingState, setEligibilityResponseLoadingState] = useState<EligibilityResponseLoadingStates>("default");
 
   const handleInputChange = (newValue: string) => {
     console.log(newValue);
-    setInputValue(newValue)
+    setInputValue(newValue);
+  }
+
+  const handleSubmit = () => {
+    setEligibilityResponseLoadingState("loading");
+    // TBD: process response
+    setValidResponse(true);
+    setTimeout(function() {
+      setEligibilityResponseLoadingState("complete");
+      console.log("waiting");
+    }, 500);
+  }
+
+  const renderEligibilityResponse = () => {
+    switch(eligibilityResponseLoadingState) {
+      case 'default':
+        return <div>Try once loser</div>;
+      case 'loading':
+        return undefined; //stub
+      case 'complete':
+        return <EligibilityResponse isValid={validResponse} />
+      case 'error':
+        return undefined; //stub
+    }
   }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Harvard FCU Prototype</h1>
       <input type="text" value={inputValue} onChange={event => handleInputChange(event.target.value)} />
+      <button onClick={handleSubmit}>Submit</button>
+      {renderEligibilityResponse()}
     </>
   )
 }
