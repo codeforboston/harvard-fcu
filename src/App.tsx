@@ -33,23 +33,23 @@ function findValidAddressForResult(result: CensusApiResponse) {
   const addressMatches = result.result.addressMatches;
 
   for (const address of addressMatches) { // Check if there is at least one address match and that it contains Census Tract information
-      const tractData = address.geographies["Census Tracts"];
+    const tractData = address.geographies["Census Tracts"];
 
-      // Verify that Census Tract information is available
-      if (tractData && tractData.length > 0) {
-        const tractValue = tractData[0].GEOID;
+    // Verify that Census Tract information is available
+    if (tractData && tractData.length > 0) {
+      const tractValue = tractData[0].GEOID;
 
-        // Check if the tractValue is in the eligible tracts list
-        if (eligibleTracts.includes(tractValue))
-          return address;
-      }
+      // Check if the tractValue is in the eligible tracts list
+      if (eligibleTracts.includes(tractValue))
+        return address;
+    }
   }
 
   return null;
 }
 
 // Define loading states for the eligibility response component
-type EligibilityResponseLoadingStates = "default" | "loading" | "complete" | "error";
+type EligibilityResponseLoadingStates = "default" | "loading" | "complete" | "error" | "no_address";
 
 // Utility function to simulate delay (using a Promise) for testing purposes
 function wait(ms: number) {
@@ -95,6 +95,11 @@ function App() {
   // Handle the form submission for geocoding request
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    if (!inputValue) {
+      // alert("Please input an address.")
+      setEligibilityResponseLoadingState("blank")
+      return
+    }
     setEligibilityResponseLoadingState("loading"); // Set loading state
     params.address = inputValue; // Update params with user-provided address
 
@@ -107,9 +112,10 @@ function App() {
 
       setValidResponse(!!findValidAddressForResult(result));
       // Navigate the JSON response structure to get the tract value
-      
+
     }
-    catch (error){
+    catch (error) {
+      console.error(error)
       setEligibilityResponseLoadingState("error")
     }
   }
@@ -124,7 +130,9 @@ function App() {
       case 'complete':
         return <EligibilityResponse isValid={validResponse} /> // Show eligibility response
       case 'error':
-        return undefined; // Error state placeholder
+        return 'An error occurred while processing your request.'; // Error state placeholder
+      case 'no_address':
+        return 'Please input an address.'
     }
   }
 

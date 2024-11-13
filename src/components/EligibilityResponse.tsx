@@ -9,7 +9,7 @@ export default function EligibilityResponse(props: EligibilityResponseProps) {
 
     return (
         <div>
-            {isValid? "Yes": "No"}
+            {isValid? "Congrats! It looks like you are eligible for membership!": "That address is outside of our coverage area."}
         </div>
     );
 }
