@@ -130,14 +130,22 @@ function App() {
 
   // Render main application with input, submit button, and eligibility response
   return (
-    <>
-      <h1>Harvard FCU Prototype</h1>
+    <div className='eligibilityBox'>
+      <h3 className='elig-h3'>Do you live, work, worship, or attend school in one of our qualified census tracts?</h3>
+      <p className='elig-p'>If so, you might be eligible for membership with us! Enter your address below to check and see if you qualify!</p>
       <form onSubmit={handleSubmit}>
-        <input type="text" value={inputValue} placeholder='Enter Street Address' onChange={event => handleInputChange(event.target.value)} />
-        <button type='submit'>Submit</button>
+        <label className='elig-label'>Street Address</label>
+        <input className='elig-input' type="text" value={inputValue} placeholder='Enter your address here...' onChange={event => handleInputChange(event.target.value)} />
+        <div className='elig-button-wrapper'>
+          <button className='elig-button' type='submit'>Search Address</button>
+          <button className={'elig-button elig-button-secondary'} type='button'>
+            <div className='elig-location-svg'></div>
+            Use My Location
+          </button>
+        </div>
       </form>
       {renderEligibilityResponse()}
-    </>
+    </div>
   )
 }
 
