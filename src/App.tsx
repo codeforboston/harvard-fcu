@@ -8,6 +8,7 @@ import { CensusApiResponse } from './types';
 
 import { geocode } from './util/census';
 import EligibleTracts from './data/tracts';
+import AddressBox from './AddressBox';
 
 // Census Geocoding API URLs for reference
 // https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress
@@ -98,7 +99,7 @@ function App() {
       <p className='elig-p'>If so, you might be eligible for membership with us! Enter your address below to check and see if you qualify!</p>
       <form onSubmit={handleSubmit}>
         <label className='elig-label'>Street Address</label>
-        <input className='elig-input' type="text" value={inputValue} placeholder='Enter your address here...' onChange={event => handleInputChange(event.target.value)} />
+        <AddressBox className='elig-input' type="text" value={inputValue} placeholder='Enter your address here...' onChange={event => handleInputChange(event.target.value)} />
         <div className='elig-button-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
           <button className={'elig-button elig-button-secondary'} type='button'>
