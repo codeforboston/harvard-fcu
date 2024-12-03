@@ -1,1 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+@media (min-width: 1200px) {
+  .eligibilityBox {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 992px) {
+  .eligibilityBox {
+    max-width: 960px;
+  }
+}
+@media (min-width: 768px) {
+  .eligibilityBox {
+    max-width: 720px;
+  }
+}
+@media (min-width: 576px) {
+  .eligibilityBox {
+    max-width: 540px;
+  }
+}
+
+html {
+  font-size: 9px;
+}
+
+body {
+  font-family: "Poppins";
+  margin: 0;
+}
+
+.eligibilityBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  min-height: 208px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  --primary-color: #8c2246;
+}
+
+.elig-h3 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 3rem;
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  /* margin: 0.5rem; */
+}
+
+.elig-p {
+  font-size: 1.9rem;
+  color: #3b4544;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.elig-label {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.elig-input {
+  display: block;
+  padding: 0.75rem 1rem;
+  font-size: 1.6rem;
+  font-family: "Poppins";
+  font-weight: 200;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  max-width: 70rem;
+  border-radius: 5px;
+  border: 0.5px solid var(--primary-color);
+  margin: 0.5rem 0;
+}
+
+.elig-input:focus {
+  outline: 1.5px solid var(--primary-color);
+}
+
+.elig-input:focus-visible {
+  outline: 1.5px solid var(--primary-color);
+}
+
+.elig-input:target {
+  border: 1px solid yellow;
+}
+
+.elig-button-wrapper {
+  display: flex;
+}
+
+.elig-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin-right: 1rem;
+  margin-top: 1.3rem;
+  margin-bottom: 3rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-family: "Poppins";
+  line-height: 1.8rem;
+  padding: 8.5px 22px;
+  border-radius: 22px;
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  -webkit-transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.elig-button-secondary {
+  background-color: white;
+  color: var(--primary-color);
+}
+
+.elig-location-svg {
+  display: inline-block;
+  margin-right: 0.3em;
+  background-size: 1.5em;
+  width: 1.5em;
+  height: 1.5em;
+  background-image: url("./assets/location.svg");
+  background-repeat: no-repeat;
+}
