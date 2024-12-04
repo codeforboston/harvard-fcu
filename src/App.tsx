@@ -1,12 +1,12 @@
 // Importing the useState hook from React and the CSS file for styling
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import './App.css';
 
 // Importing a component for displaying eligibility responses
 import EligibilityResponse from './components/EligibilityResponse';
 import { CensusApiResponse } from './types';
 
-import { geocode } from './util/census';
+import { geocode, lookupCoords } from './util/census';
 import EligibleTracts from './data/tracts';
 import AddressBox from './AddressBox';
 
@@ -50,6 +50,16 @@ function App() {
     console.log(newValue); // Log new input value for debugging
     setInputValue(newValue); // Update state with the new input value
   }
+
+  // Update the input value on fetching the address
+  const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult) => {
+    const addressComponents = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
+    const pieces: string[] = [];
+    place.address_components?.forEach(component => {
+      if (addressComponents.includes(component.types[0])) pieces.push(component.long_name);
+    })
+    setInputValue(pieces.join(' '));
+  }, [])
 
   // Handle the form submission for geocoding request
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -99,10 +109,19 @@ function App() {
       <p className='elig-p'>If so, you might be eligible for membership with us! Enter your address below to check and see if you qualify!</p>
       <form onSubmit={handleSubmit}>
         <label className='elig-label'>Street Address</label>
-        <AddressBox className='elig-input' type="text" value={inputValue} placeholder='Enter your address here...' onChange={event => handleInputChange(event.target.value)} />
+        <AddressBox className='elig-input' 
+                    value={inputValue} placeholder='Enter your address here...' 
+                    onChange={event => handleInputChange(event.target.value)} 
+                    onPlaceChanged={handlePlaceChange} />
         <div className='elig-button-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
-          <button className={'elig-button elig-button-secondary'} type='button'>
+          <button className={'elig-button elig-button-secondary'} type='button'
+                  onClick={async () => {
+                    const result = await lookupCoords({ lng: -70.89242, lat: 42.50599, })
+                  //     north: 42.50599,
+            //     west: -70.89242
+                    console.log(result)
+                  }}>
             <div className='elig-location-svg'></div>
             Use My Location
           </button>

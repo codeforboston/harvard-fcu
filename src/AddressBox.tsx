@@ -7,9 +7,11 @@ type Props = {
     placeholder?: string
     value?: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>
+    onPlaceChanged?: (place: google.maps.places.PlaceResult) => void
 }
 
-const AutocompleteInput = (props: Props) => {
+const AutocompleteInput = (props_: Props) => {
+    const { onPlaceChanged, ...props } = props_;
     const places = useMapsLibrary('places');
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,21 +22,21 @@ const AutocompleteInput = (props: Props) => {
         console.log(places)
 
         const p = new places.Autocomplete(inputRef.current, {
-            strictBounds: true,
-            bounds: {
-                south: 42.23286,
-                east: -71.22737,
-                north: 42.50599,
-                west: -70.89242
-            }
+            // strictBounds: true,
+            // bounds: {
+            //     south: 42.23286,
+            //     east: -71.22737,
+            //     north: 42.50599,
+            //     west: -70.89242
+            // }
         });
-        p.addListener('place_changed', e => {
-            console.log(e);
+        p.addListener('place_changed', () => {
             const place = p.getPlace();
-            console.log(place);
+            onPlaceChanged?.(place);
+            // console.log(place);
         })
         // p.addListener()
-    }, [places]);
+    }, [places, onPlaceChanged]);
 
     return (
         <input ref={inputRef} {...props} />
