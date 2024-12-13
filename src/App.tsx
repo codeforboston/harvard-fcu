@@ -9,6 +9,7 @@ import { CensusApiResponse } from './types';
 import { geocode, lookupCoords } from './util/census';
 import EligibleTracts from './data/tracts';
 import AddressBox from './AddressBox';
+// import SuccessPage from './SuccessPage';
 
 // Census Geocoding API URLs for reference
 // https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress
@@ -37,13 +38,27 @@ function findValidAddressForResult(result: CensusApiResponse) {
 // Define loading states for the eligibility response component
 type EligibilityResponseLoadingStates = "default" | "loading" | "complete" | "error" | "no_address";
 
+async function getCurrentPosition() {
+  return new Promise<GeolocationPosition>((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+}
 
 // Main App component
 function App() {
   // State for input value, valid response status, and loading state of eligibility response
   const [inputValue, setInputValue] = useState<string>("");
-  const [validResponse, setValidResponse] = useState<boolean>(false);
+  const [apiResponse, setApiResponse] = useState<CensusApiResponse | null>(null)
+  const validResponse = !!(apiResponse && findValidAddressForResult(apiResponse))
   const [eligibilityResponseLoadingState, setEligibilityResponseLoadingState] = useState<EligibilityResponseLoadingStates>("default");
+  // const pageContent = {
+  //   default: {
+  //     h3: 'Do you live, work, worship, or attend school in one of our qualified census tracts?',
+  //     p: '....',
+  //   },
+  //   success: ...,
+  //   failure: ...,
+  // }
 
   // Update the input value on text change
   const handleInputChange = (newValue: string) => {
@@ -73,12 +88,9 @@ function App() {
     try {
       const result = await geocode({ address: inputValue });
       setEligibilityResponseLoadingState("complete");
+      setApiResponse(result);
 
       console.log(result); // Log result for debugging
-
-      setValidResponse(!!findValidAddressForResult(result));
-      // Navigate the JSON response structure to get the tract value
-
     }
     catch (error) {
       console.error(error)
@@ -87,19 +99,20 @@ function App() {
   }
 
   // Render different eligibility response states based on loading state
+
   const renderEligibilityResponse = () => {
-    switch (eligibilityResponseLoadingState) {
-      case 'default':
-        return <div></div>; // Default message
-      case 'loading':
-        return '...'; // Loading state placeholder
-      case 'complete':
-        return <EligibilityResponse isValid={validResponse} /> // Show eligibility response
-      case 'error':
-        return 'An error occurred while processing your request.'; // Error state placeholder
-      case 'no_address':
-        return 'Please input an address.'
-    }
+  switch (eligibilityResponseLoadingState) {
+    case 'default':
+      return <div></div>; // Default message
+    case 'loading':
+      return '...'; // Loading state placeholder
+    case 'complete':
+      return <EligibilityResponse isValid={validResponse} /> // Show eligibility response
+    case 'error':
+      return 'An error occurred while processing your request.'; // Error state placeholder
+    case 'no_address':
+      return 'Please input an address.'
+  }
   }
 
   // Render main application with input, submit button, and eligibility response
@@ -117,10 +130,16 @@ function App() {
           <button className='elig-button' type='submit'>Search Address</button>
           <button className={'elig-button elig-button-secondary'} type='button'
                   onClick={async () => {
-                    const result = await lookupCoords({ lng: -70.89242, lat: 42.50599, })
-                  //     north: 42.50599,
-            //     west: -70.89242
+                    if (!navigator.geolocation)
+                      throw 'Geolocation API unavailable';
+                    
+                    const position = await getCurrentPosition();
+                    const result = await lookupCoords({ 
+                      lng: position.coords.longitude,
+                      lat: position.coords.latitude,
+                    })
                     console.log(result)
+                    setApiResponse(result);
                   }}>
             <div className='elig-location-svg'></div>
             Use My Location

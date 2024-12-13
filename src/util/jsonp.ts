@@ -6,12 +6,12 @@ export function encodeQueryParams(params: Record<string, string>) {
 
 type JsonpParams = {
   url: string,
-  queryParams?: any,
+  queryParams?: object,
   callbackParam?: string,
 };
 
 // Function to load JSONP data, creating a script tag and defining a global callback
-export function loadJsonp(params: JsonpParams): Promise<any> {
+export function loadJsonp<T = object>(params: JsonpParams): Promise<T> {
   const { queryParams = {}, callbackParam = 'callback' } = params;
 
   const n = Math.floor(Math.random()*100000000);
@@ -30,7 +30,8 @@ export function loadJsonp(params: JsonpParams): Promise<any> {
     //    src = url + format=jsonp, callback=
     // Insert script into head (or update virtual script element)
 
-    (window as any)[functionName] = function(result: any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any)[functionName] = function(result: T | PromiseLike<T>) {
       resolve(result); // Resolve the promise with the result on success
     }
     const script = document.createElement("script"); // Create script element

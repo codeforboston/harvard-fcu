@@ -134,6 +134,10 @@ body {
     font-family: "Poppins";
 }
 
+.pac-item-selected .pac-icon-marker {
+  background-position: center;
+}
+
 .pac-icon {
     margin-right: 0.4em;
     margin-top: 0.4em;

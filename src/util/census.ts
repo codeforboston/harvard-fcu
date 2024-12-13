@@ -1,3 +1,4 @@
+import { CensusApiResponse } from '../types';
 import { loadJsonp } from './jsonp';
 
 const Url = "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress";
@@ -26,7 +27,7 @@ type LookupCoordsOptions = {
 };
 
 export async function lookupCoords(opts: LookupCoordsOptions) {
-  return await loadJsonp({
+  return await loadJsonp<CensusApiResponse>({
     url: "https://geocoding.geo.census.gov/geocoder/geographies/coordinates",
     queryParams: {
       x: opts.lng,

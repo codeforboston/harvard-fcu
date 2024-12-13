@@ -19,21 +19,19 @@ const AutocompleteInput = (props_: Props) => {
         if (!places || !inputRef.current) 
             return;
 
-        console.log(places)
-
         const p = new places.Autocomplete(inputRef.current, {
-            // strictBounds: true,
-            // bounds: {
-            //     south: 42.23286,
-            //     east: -71.22737,
-            //     north: 42.50599,
-            //     west: -70.89242
-            // }
+            strictBounds: true,
+            bounds: {
+                south: 42.23286,
+                east: -71.22737,
+                north: 42.50599,
+                west: -70.89242
+            }
         });
         p.addListener('place_changed', () => {
             const place = p.getPlace();
             onPlaceChanged?.(place);
-            // console.log(place);
+            console.log(place);
         })
         // p.addListener()
     }, [places, onPlaceChanged]);
