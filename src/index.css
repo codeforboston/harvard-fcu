@@ -113,6 +113,7 @@ body {
   background-color: var(--primary-color);
   -webkit-transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .elig-button-secondary {
@@ -131,7 +132,7 @@ body {
 }
 
 .pac-item {
-    font-family: "Poppins";
+  font-family: "Poppins";
 }
 
 .pac-item-selected .pac-icon-marker {
@@ -139,10 +140,27 @@ body {
 }
 
 .pac-icon {
-    margin-right: 0.4em;
-    margin-top: 0.4em;
-    background-image:url("./assets/location.svg") !important;
-    background-size: 1.5em;
-    background-repeat: no-repeat;
-    background-position: center;
+  margin-right: 0.4em;
+  margin-top: 0.4em;
+  background-image: url("./assets/location.svg") !important;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.elig-ul {
+  font-size: 1.5rem;
+}
+
+.elig-a {
+  color: var(--primary-color);
+  align-self: center;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  padding: 16px 16px;
+}
+
+.elig-h4 {
+  font-size: 1.9rem;
+  color: var(--primary-color);
 }

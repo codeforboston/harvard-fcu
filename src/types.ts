@@ -25,30 +25,30 @@ export type CensusAddressMatch = {
     geographies: {
         "Census Tracts": [
             {
-"SUFFIX": string,
-"POP100": number,
-"GEOID": string,
-"CENTLAT": string,
-"BLOCK": string,
-"AREAWATER": number
-"STATE": string,
-"BASENAME": string,
-"OID": string,
-"LSADC": string,
-"INTPTLAT": string,
-"FUNCSTAT": string,
-"NAME": string,
-"OBJECTID": number,
-"TRACT": string,
-"CENTLON": string,
-"BLKGRP": string,
-"AREALAND": number,
-"HU100": number,
-"INTPTLON": string,
-"MTFCC": string,
-"LWBLKTYP": string,
-"UR": string,
-"COUNTY": string
+                "SUFFIX": string,
+                "POP100": number,
+                "GEOID": string,
+                "CENTLAT": string,
+                "BLOCK": string,
+                "AREAWATER": number
+                "STATE": string,
+                "BASENAME": string,
+                "OID": string,
+                "LSADC": string,
+                "INTPTLAT": string,
+                "FUNCSTAT": string,
+                "NAME": string,
+                "OBJECTID": number,
+                "TRACT": string,
+                "CENTLON": string,
+                "BLKGRP": string,
+                "AREALAND": number,
+                "HU100": number,
+                "INTPTLON": string,
+                "MTFCC": string,
+                "LWBLKTYP": string,
+                "UR": string,
+                "COUNTY": string
             }]
         
     }
@@ -69,3 +69,5 @@ export type CensusApiResponse = {
         addressMatches: CensusAddressMatch[]
     }
 }
+
+export type EligibilityAppStates = "search" | "loading" | "eligible" | "not_eligible" | "error" | "no_address";

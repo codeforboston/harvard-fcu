@@ -14,11 +14,12 @@ const AutocompleteInput = (props_: Props) => {
     const { onPlaceChanged, ...props } = props_;
     const places = useMapsLibrary('places');
     const inputRef = useRef<HTMLInputElement>(null);
-
+    
     useEffect(() => {
         if (!places || !inputRef.current) 
             return;
 
+        // instantiate a Place prediction widget that attaches to input field
         const p = new places.Autocomplete(inputRef.current, {
             strictBounds: true,
             bounds: {
@@ -28,12 +29,13 @@ const AutocompleteInput = (props_: Props) => {
                 west: -70.89242
             }
         });
+
+        // 'place_changed' event fires when user selects a place from the drop-down list of autosuggestions. For reference, see:
+        // https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete.place_changed
         p.addListener('place_changed', () => {
             const place = p.getPlace();
             onPlaceChanged?.(place);
-            console.log(place);
         })
-        // p.addListener()
     }, [places, onPlaceChanged]);
 
     return (
