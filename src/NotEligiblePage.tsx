@@ -25,10 +25,11 @@ const NotEligiblePage: React.FC<Props> = (props: Props) => {
             <div>
             <h4 className='elig-h4'>Financial Fitness Association</h4>
             <p className='elig-p'>
-                If you become a member of the Financial Fitness Association, then you automatically qualify for membership at Harvard FCY. Harvard FCU will even cover the $8 annual membership fee for the first year!
+                If you become a member of the Financial Fitness Association, then you automatically qualify for membership at Harvard FCU. Harvard FCU will even cover the $8 annual membership fee for the first year!
             </p>
             <button className={'elig-button elig-button-secondary'} type='button' onClick={() => location.href = '#'}>
                 {'FFA Learn More >'}
+                {/* https://financialfitnessassociation.org */}
             </button>
             </div>
 

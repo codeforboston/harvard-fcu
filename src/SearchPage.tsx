@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { geocode, lookupCoords } from './util/census';
 import { CensusApiResponse, EligibilityAppStates } from './types';
 import EligibleTracts from './data/tracts';
@@ -14,15 +14,16 @@ type Props = {
 
 const SearchPage: React.FC<Props> = (props: Props) => {
   const { setPageState } = props;
-  const [inputValue, setInputValue] = useState<string>("");
+  // const [inputValue, setInputValue] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null)
   // const [censusApiResponse, setCensusApiResponse] = useState<CensusApiResponse | null>(null);
   // const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
 
   // Update the input value on text change
-  const handleInputChange = (newValue: string) => {
-    console.log(newValue);
-    setInputValue(newValue);
-  }
+  // const handleInputChange = (newValue: string) => {
+  //   console.log(newValue);
+  //   setInputValue(newValue);
+  // }
 
   // Update the input value on fetching the address
   const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult) => {
@@ -33,13 +34,17 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     place.address_components?.forEach(component => {
       if (addressComponentsToDisplay.includes(component.types[0])) addressPieces.push(component.long_name);
     })
-    setInputValue(addressPieces.join(', '));
+    if (inputRef.current){
+        inputRef.current.value = addressPieces.join(', ');
+      }
+    // setInputValue(addressPieces.join(', '));
   }, [])
 
   // Handle the form submission for geocoding request
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    if (!inputValue) {
+    const address = inputRef.current?.value || ''
+    if (!address) {
       // alert("Please input an address.")
       setPageState("no_address");
       return
@@ -47,7 +52,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     setPageState("loading");
     try {
       // Retrieve geocoding data for the given address
-      const censusApiResponse = await geocode({ address: inputValue });
+      const censusApiResponse = await geocode({ address });
       // Find out if address is eligible and update the page state
       // TO-DO: refactor into a function (see Use My Location)
       const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
@@ -88,12 +93,13 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <label className='elig-label'>Street Address</label>
         <AddressBox className='elig-input' 
-                    value={inputValue} placeholder='Enter your address here...' 
-                    onChange={event => handleInputChange(event.target.value)} 
-                    onPlaceChanged={handlePlaceChange} />
+                    placeholder='Enter your address here...' 
+                    onPlaceChanged={handlePlaceChange}
+                    name='address'
+                    ref={inputRef} />
         <div className='elig-button-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
           <button className={'elig-button elig-button-secondary'} type='button'

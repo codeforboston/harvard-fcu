@@ -1,5 +1,5 @@
 import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
-import { CSSProperties, useEffect, useRef } from "react";
+import { CSSProperties, forwardRef, useEffect, useRef } from "react";
 
 type Props = {
     style?: CSSProperties,
@@ -8,12 +8,13 @@ type Props = {
     value?: string
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     onPlaceChanged?: (place: google.maps.places.PlaceResult) => void
+    name?: string
 }
 
-const AutocompleteInput = (props_: Props) => {
+const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
     const { onPlaceChanged, ...props } = props_;
     const places = useMapsLibrary('places');
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement | undefined>(undefined);
     
     useEffect(() => {
         if (!places || !inputRef.current) 
@@ -24,31 +25,57 @@ const AutocompleteInput = (props_: Props) => {
             strictBounds: true,
             bounds: {
                 south: 42.23286,
-                east: -71.22737,
+                west: -71.22737,
                 north: 42.50599,
-                west: -70.89242
+                east: -70.89242
             }
         });
 
         // 'place_changed' event fires when user selects a place from the drop-down list of autosuggestions. For reference, see:
         // https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete.place_changed
         p.addListener('place_changed', () => {
+            // eslint-disable-next-line no-debugger
+            // debugger;
+
             const place = p.getPlace();
             onPlaceChanged?.(place);
-        })
+        });
     }, [places, onPlaceChanged]);
 
-    return (
-        <input ref={inputRef} {...props} />
-    )
-}
+    // const onKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback((event) => {
+    //     // check that key is ENTER
+    //     if (event.key === 'Enter' ) {
+    //         // eslint-disable-next-line no-debugger
+    //         const autocompleteContainers = document.getElementsByClassName("pac-container")
+    //         console.log(autocompleteContainers);
+    //          if (autocompleteContainers[0]?.computedStyleMap().get('display') === 'block') {
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //          }
+            
+    //         // check that autocomplete is showing
+    //     }
+    // }, [])
 
-const AddressBox = (props: Props) => {
+    return (
+        <input ref={(input) => {
+            inputRef.current = input || undefined;
+            if (ref) {
+                if (typeof ref === 'function')
+                    ref(input);
+                else
+                    ref.current = input
+            }
+        }} {...props} />
+    )
+})
+
+const AddressBox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
         <APIProvider apiKey="AIzaSyDwmsT7zb6teXmmQj37OcwCKtP4S8R26Ks">
-            <AutocompleteInput {...props} />
+            <AutocompleteInput {...props} ref={ref} />
         </APIProvider>
     )
-}
+})
 
 export default AddressBox;
