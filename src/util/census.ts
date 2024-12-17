@@ -9,7 +9,7 @@ type GeocodeOptions = {
 };
 
 export async function geocode(opts: GeocodeOptions) {
-  return await loadJsonp({
+  return await loadJsonp<CensusApiResponse>({
     url: Url,
     queryParams: {
       ...opts,
