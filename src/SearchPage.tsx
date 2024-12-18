@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { geocode, lookupCoords } from './util/census';
 import { CensusApiResponse, EligibilityAppStates } from './types';
 import EligibleTracts from './data/tracts';
