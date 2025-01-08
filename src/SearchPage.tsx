@@ -53,6 +53,8 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     try {
       // Retrieve geocoding data for the given address
       const censusApiResponse = await geocode({ address });
+      // console.log('matchedAddress', censusApiResponse.result.addressMatches[0].matchedAddress);
+      
       // Find out if address is eligible and update the page state
       // TO-DO: refactor into a function (see Use My Location)
       const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
