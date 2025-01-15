@@ -95,7 +95,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   
   return (
     <>
-      <form onSubmit={handleSubmit} >
+      <form className='elig-form' onSubmit={handleSubmit} >
         <label className='elig-label'>Street Address</label>
         <AddressBox className='elig-input' 
                     placeholder='Enter your address here...' 

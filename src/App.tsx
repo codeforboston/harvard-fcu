@@ -19,25 +19,25 @@ function App() {
       case 'search':
         return <>
           <SearchPageHeading/>
-          <SearchPage setPageState={setEligibilityAppState}/>;
+          <SearchPage setPageState={setEligibilityAppState}/>
         </>
       case 'loading':
         return <LoadingPage/>
       case 'no_address':
         return <>
           <NoAddressPageHeading/>
-          <SearchPage setPageState={setEligibilityAppState}/>;
+          <SearchPage setPageState={setEligibilityAppState}/>
         </>
       case 'eligible':
         return <EligiblePage/>
       case 'not_eligible':
         return <NotEligiblePage setPageState={setEligibilityAppState} />
       case 'error':
-        return <ErrorPage/>;
+        return <ErrorPage/>
       default:
-        return <h1>Did not match any component</h1>;
+        return <h1>Did not match any component</h1>
     }
-  };
+  }
 
   // Render main application
   return (
