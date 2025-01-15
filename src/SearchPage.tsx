@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { geocode, lookupCoords } from './util/census';
 import { CensusApiResponse, EligibilityAppStates } from './types';
 import EligibleTracts from './data/tracts';
@@ -93,7 +93,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   
   return (
     <>
-      <form onSubmit={handleSubmit} >
+      <form className='elig-form' onSubmit={handleSubmit} >
         <label className='elig-label'>Street Address</label>
         <AddressBox className='elig-input' 
                     placeholder='Enter your address here...' 
