@@ -23,7 +23,9 @@ const EligiblePage: React.FC<Props> = () => {
                 <li>Your mobile phone</li>
             </ul>
             <div className='elig-button-wrapper'>
+            <a href="https://app.loanspq.com/xa/xpressApp.aspx?enc=Kw21Wblm1yxpjJabdoZaD-Gr_IHl-C8fchODgpSxXjXxSPGFrEl4jSeBYt4aHlqZ_hVg_J5c4ST0o0u4NRrvqXWvff49QjYj346K93kVe7U">
             <button className='elig-button' type='button'>{'Join Today! >'}</button>
+            </a>
             <a href='https://harvardfcu.org/membership/join/' className='elig-a'>Learn More About Memberships</a>
         </div>
         </>
