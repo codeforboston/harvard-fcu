@@ -44,20 +44,22 @@ body {
   margin: 3rem auto;
   padding: 0 1rem;
   --primary-color: #8c2246;
+  --text-color: #3b4544;
 }
 
 .elig-h3 {
-  font-size: 2.8rem;
+  font-size: 24px;
   font-weight: 600;
-  line-height: 3rem;
+  /* line-height: 3rem; */
   color: var(--primary-color);
   margin-top: 0;
   margin-bottom: 8px;
 }
 
 .elig-p {
-  font-size: 1.9rem;
-  color: #3b4544;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-color);
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -67,7 +69,7 @@ body {
 }
 
 .elig-label {
-  font-size: 1.9rem;
+  font-size: 16px;
   font-weight: 600;
   color: var(--primary-color);
   margin-bottom: 1rem;
@@ -116,7 +118,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 1.8rem;
+  font-size: 16px;
   font-weight: 600;
   font-family: "Poppins";
   line-height: 1.8rem;
@@ -163,6 +165,7 @@ body {
 
 .elig-ul {
   font-size: 1.5rem;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
