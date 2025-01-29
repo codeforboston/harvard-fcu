@@ -1,5 +1,5 @@
-import { CensusApiResponse } from '../types';
-import { loadJsonp } from './jsonp';
+import { CensusApiResponse, CensusCoordsApiResponse } from '../types';
+import { encodeQueryParams, loadJsonp } from './jsonp';
 
 const Url = "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress";
 
@@ -27,7 +27,7 @@ type LookupCoordsOptions = {
 };
 
 export async function lookupCoords(opts: LookupCoordsOptions) {
-  return await loadJsonp<CensusApiResponse>({
+  return await loadJsonp<CensusCoordsApiResponse>({
     url: "https://geocoding.geo.census.gov/geocoder/geographies/coordinates",
     queryParams: {
       x: opts.lng,
@@ -38,4 +38,13 @@ export async function lookupCoords(opts: LookupCoordsOptions) {
       'format': 'jsonp',                                 // Request JSONP format
     }
   })
+}
+
+// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
+export async function reverseGeocode(coords: LookupCoordsOptions) {
+  const url = 'https://maps.googleapis.com/maps/api/geocode/json?' + encodeQueryParams({ latlng: coords.lat + ',' + coords.lng, key: 'AIzaSyCdouiCnCfm6bg7zZ2uYqF7Id_AFmf3EH4' });
+  // ;
+
+  const data = await fetch(url).then(r => r.json());
+  return data.results.find((result: any) => (result.types.includes('premise')))
 }

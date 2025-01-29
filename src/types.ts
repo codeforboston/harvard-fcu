@@ -70,4 +70,34 @@ export type CensusApiResponse = {
     }
 }
 
+export type CensusCoordsApiResponse = {
+    "result": {
+        "geographies": {
+            "Census Tracts": {
+                "POP100": 4511,
+                "GEOID": "25017326101",
+                "CENTLAT": "+42.6038878",
+                "AREAWATER": 242055,
+                "STATE": "25",
+                "BASENAME": "3261.01",
+                "OID": "207903709897439",
+                "LSADC": "CT",
+                "FUNCSTAT": "S",
+                "INTPTLAT": "+42.5995227",
+                "NAME": "Census Tract 3261.01",
+                "OBJECTID": 24592,
+                "TRACT": "326101",
+                "CENTLON": "-071.5954545",
+                "HU100": 1592,
+                "AREALAND": 36017470,
+                "INTPTLON": "-071.5902174",
+                "MTFCC": "G5020",
+                "UR": "M",
+                "COUNTY": "017"
+            }[],
+        },
+        "input": any
+    }
+}
+
 export type EligibilityAppStates = "search" | "loading" | "eligible" | "not_eligible" | "error" | "no_address";

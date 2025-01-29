@@ -101,6 +101,19 @@ body {
   border: 1px solid yellow;
 }
 
+div.loading {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 70rem;
+  padding-top: 2em;
+}
+
+.loading img {
+  aspect-ratio: 1;
+  width: 50px;
+}
+
 .elig-button-wrapper {
   display: flex;
   margin-top: 8px;

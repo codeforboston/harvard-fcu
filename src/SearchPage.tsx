@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
-import { geocode, lookupCoords } from './util/census';
-import { CensusApiResponse, EligibilityAppStates } from './types';
+import { geocode, lookupCoords, reverseGeocode } from './util/census';
+import { CensusApiResponse, CensusCoordsApiResponse, EligibilityAppStates } from './types';
 import EligibleTracts from './data/tracts';
 import AddressBox from './AddressBox';
 
@@ -87,6 +87,10 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     return null;
   }
 
+  function hasEligibleCensusBlock(result: CensusCoordsApiResponse) {
+    return !!result.result.geographies['Census Tracts'].find(t => EligibleTracts.includes(t.GEOID));
+  }
+
   async function getCurrentPosition() {
     return new Promise<GeolocationPosition>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -96,11 +100,12 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   return (
     <>
       <form className='elig-form' onSubmit={handleSubmit} >
-        <label className='elig-label'>Street Address</label>
+        <label className='elig-label' htmlFor='address'>Street Address</label>
         <AddressBox className='elig-input' 
                     placeholder='Enter your address here...' 
                     onPlaceChanged={handlePlaceChange}
                     name='address'
+                    id='address'
                     ref={inputRef} />
         <div className='elig-button-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
@@ -110,12 +115,22 @@ const SearchPage: React.FC<Props> = (props: Props) => {
                 throw 'Geolocation API unavailable';
               // TO-DO: handle the case when addressMatches is undefined
               const position = await getCurrentPosition();
+              const matched = await reverseGeocode({ 
+                lng: position.coords.longitude,
+                lat: position.coords.latitude,
+              });
+
+              if (inputRef.current)
+                inputRef.current.value = matched.formatted_address;
+
+              // console.log();
               const censusApiResponse = await lookupCoords({ 
                 lng: position.coords.longitude,
                 lat: position.coords.latitude,
-              })
+              });
+
               // Find out if address is eligible and update the page state
-              const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
+              const addressIsEligible = !!(censusApiResponse && hasEligibleCensusBlock(censusApiResponse));
               setPageState(addressIsEligible ? "eligible" : "not_eligible");
             }}>
             <div className='elig-location-svg'></div>

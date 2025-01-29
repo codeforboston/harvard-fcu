@@ -9,6 +9,7 @@ type Props = {
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     onPlaceChanged?: (place: google.maps.places.PlaceResult) => void
     name?: string
+    id?: string
 }
 
 const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
@@ -41,21 +42,6 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
             onPlaceChanged?.(place);
         });
     }, [places, onPlaceChanged]);
-
-    // const onKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback((event) => {
-    //     // check that key is ENTER
-    //     if (event.key === 'Enter' ) {
-    //         // eslint-disable-next-line no-debugger
-    //         const autocompleteContainers = document.getElementsByClassName("pac-container")
-    //         console.log(autocompleteContainers);
-    //          if (autocompleteContainers[0]?.computedStyleMap().get('display') === 'block') {
-    //             event.preventDefault();
-    //             event.stopPropagation();
-    //          }
-            
-    //         // check that autocomplete is showing
-    //     }
-    // }, [])
 
     return (
         <input ref={(input) => {
