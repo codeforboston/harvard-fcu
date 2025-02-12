@@ -7,7 +7,7 @@ import EligiblePage from './EligiblePage';
 import NotEligiblePage from './NotEligiblePage';
 import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
-import NoAddressPageHeading from './NoAddressPageHeading';
+import IncorrectAddressPageHeading from './IncorrectAddressPageHeading';
 import SearchPageHeading from './SearchPageHeading';
 
 // Main App component
@@ -22,10 +22,13 @@ function App() {
           <SearchPage setPageState={setEligibilityAppState}/>
         </>
       case 'loading':
-        return <LoadingPage/>
-      case 'no_address':
         return <>
-          <NoAddressPageHeading/>
+          <SearchPageHeading/>
+          <LoadingPage/>
+        </>
+      case 'incorrect_address':
+        return <>
+          <IncorrectAddressPageHeading/>
           <SearchPage setPageState={setEligibilityAppState}/>
         </>
       case 'eligible':

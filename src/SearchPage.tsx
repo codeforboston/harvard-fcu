@@ -14,66 +14,60 @@ type Props = {
 
 const SearchPage: React.FC<Props> = (props: Props) => {
   const { setPageState } = props;
-  // const [inputValue, setInputValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null)
-  // const [censusApiResponse, setCensusApiResponse] = useState<CensusApiResponse | null>(null);
-  // const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
-
-  // Update the input value on text change
-  // const handleInputChange = (newValue: string) => {
-  //   console.log(newValue);
-  //   setInputValue(newValue);
-  // }
 
   // Update the input value on fetching the address
   const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult) => {
     // Parse a given Autocomplete prediction
-    // TO-DO: refactor to use place.fetchFields()?
+    // TO-DO: check if it makes sense to refactor it using place.fetchFields()
     const addressComponentsToDisplay = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
     const addressPieces: string[] = [];
+    // TO-DO: refactor to use code in Find My Location
+    // if street address is empty, get address by coordinates
     place.address_components?.forEach(component => {
       if (addressComponentsToDisplay.includes(component.types[0])) addressPieces.push(component.long_name);
     })
-    if (inputRef.current){
+    if (inputRef.current && addressPieces.length){
         inputRef.current.value = addressPieces.join(', ');
       }
-    // setInputValue(addressPieces.join(', '));
   }, [])
 
   // Handle the form submission for geocoding request
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const address = inputRef.current?.value || ''
-    if (!address) {
-      // alert("Please input an address.")
-      setPageState("no_address");
-      return
+
+    const address = inputRef.current?.value || '';
+
+    if (address.length <= 1) {
+      setPageState("incorrect_address");
+      return;
     }
     setPageState("loading");
     try {
       // Retrieve geocoding data for the given address
       const censusApiResponse = await geocode({ address });
-      // console.log('matchedAddress', censusApiResponse.result.addressMatches[0].matchedAddress);
-      
+
       // Find out if address is eligible and update the page state
-      // TO-DO: refactor into a function (see Use My Location)
       const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
       setPageState(addressIsEligible ? "eligible" : "not_eligible");
     }
     catch (error) {
-      console.error(error)
-      setPageState("error")
+      console.error(error);
+      setPageState("error");
     }
   }
 
   // Process Census API response and find eligible address, if any.
   function findEligibleAddress(result: CensusApiResponse) {
     const addressMatches = result.result.addressMatches;
-    console.log('addressMatches', addressMatches);
+
+    // TO-DO: set state to incorrect_address when addressMatches array is empty
+    // if (addressMatches.length == 0) {
+    //   setPageState("incorrect_address"); // error state
+    // }
 
     for (const address of addressMatches) { // Check if there is at least one address match and that it contains Census Tract information
       const tractData = address.geographies["Census Tracts"];
-      console.log('tractData: ', tractData);
       
       // Verify that Census Tract information is available
       if (tractData && tractData.length > 0) {
@@ -123,7 +117,6 @@ const SearchPage: React.FC<Props> = (props: Props) => {
               if (inputRef.current)
                 inputRef.current.value = matched.formatted_address;
 
-              // console.log();
               const censusApiResponse = await lookupCoords({ 
                 lng: position.coords.longitude,
                 lat: position.coords.latitude,
