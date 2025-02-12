@@ -22,7 +22,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
             return;
 
         // instantiate a Place prediction widget that attaches to input field
-        const p = new places.Autocomplete(inputRef.current, {
+        const placesWidget = new places.Autocomplete(inputRef.current, {
             strictBounds: true,
             bounds: {
                 south: 42.23286,
@@ -34,11 +34,8 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
 
         // 'place_changed' event fires when user selects a place from the drop-down list of autosuggestions. For reference, see:
         // https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete.place_changed
-        p.addListener('place_changed', () => {
-            // eslint-disable-next-line no-debugger
-            // debugger;
-
-            const place = p.getPlace();
+        placesWidget.addListener('place_changed', () => {
+            const place = placesWidget.getPlace();
             onPlaceChanged?.(place);
         });
     }, [places, onPlaceChanged]);
@@ -50,7 +47,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
                 if (typeof ref === 'function')
                     ref(input);
                 else
-                    ref.current = input
+                    ref.current = input;
             }
         }} {...props} />
     )
@@ -58,6 +55,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
 
 const AddressBox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
+        // TO-DO: create a .env file to store the apiKey in
         <APIProvider apiKey="AIzaSyDwmsT7zb6teXmmQj37OcwCKtP4S8R26Ks">
             <AutocompleteInput {...props} ref={ref} />
         </APIProvider>

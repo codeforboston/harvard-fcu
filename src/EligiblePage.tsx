@@ -6,6 +6,7 @@ const joinTodayUrl = 'https://app.loanspq.com/xa/xpressApp.aspx?enc=Kw21Wblm1yxp
 const learnMoreAboutMemberships = 'https://harvardfcu.org/membership/join/'
 
 const EligiblePage: React.FC<Props> = () => {
+    // TO-DO: success svg is not displayed on page
     return (
         <>
             <h3 id='elig-h3'>

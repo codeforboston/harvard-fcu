@@ -210,6 +210,13 @@ div.loading {
   transform: rotate(-10deg);
 }
 
+.elig-wonder-svg {
+  background-image: url("./assets/HFCU_Emotes_RGB_Full Color_Wonder.svg");
+  background-size: 110%;
+  width: 70px;
+  height: 70px;
+}
+
 .elig-a {
   color: var(--primary-color);
   align-self: center;

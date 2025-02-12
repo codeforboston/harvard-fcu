@@ -100,4 +100,4 @@ export type CensusCoordsApiResponse = {
     }
 }
 
-export type EligibilityAppStates = "search" | "loading" | "eligible" | "not_eligible" | "error" | "no_address";
+export type EligibilityAppStates = "search" | "loading" | "eligible" | "not_eligible" | "error" | "incorrect_address";
