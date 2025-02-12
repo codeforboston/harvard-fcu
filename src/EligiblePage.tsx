@@ -8,22 +8,25 @@ const learnMoreAboutMemberships = 'https://harvardfcu.org/membership/join/'
 const EligiblePage: React.FC<Props> = () => {
     return (
         <>
-            <h3 className='elig-h3'>
+            <h3 id='elig-h3'>
                 Congrats! It looks like you are eligible for membership! 
             </h3>
             <p className='elig-p'>
                 Click the link below to start your application! Make sure you have the following ready before you start the application:
             </p>
             <ul className='elig-ul'>
-                <div>
+                <div className='elig-li-wrapper'>
                     <li>Valid Social Security #</li>
                     <li>Valid government issued ID #</li>
                     <li>Date of Birth</li>
                 </div>
-                <div>
+                <div className='elig-li-wrapper'>
                     <li>Address, Email address and phone number</li>
                     <li>Work ID (if applicable)</li>
                     <li>Your mobile phone</li>
+                </div>
+                <div className='elig-li-wrapper'>
+                    <div className='elig-success-svg'></div>
                 </div>
             </ul>
             <div className='elig-button-wrapper'>

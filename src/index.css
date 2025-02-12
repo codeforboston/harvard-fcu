@@ -19,9 +19,6 @@
   .eligibilityBox {
     max-width: 540px;
   }
-  .elig-ul {
-    height: 7rem;
-  }
   div .elig-button-wrapper {
     justify-content: start;
   }
@@ -41,19 +38,18 @@ body {
   flex-direction: column;
   max-width: 1440px;
   min-height: 208px;
-  margin: 3rem auto;
-  padding: 0 1rem;
   --primary-color: #8c2246;
   --text-color: #3b4544;
 }
 
-.elig-h3 {
-  font-size: 24px;
-  font-weight: 600;
-  /* line-height: 3rem; */
+#elig-h3 {
+  font-size: 24px !important;
+  font-weight: 700;
   color: var(--primary-color);
   margin-top: 0;
   margin-bottom: 8px;
+  font-family: "Poppins" !important;
+  line-height: 1.5;
 }
 
 .elig-p {
@@ -73,6 +69,7 @@ body {
   font-weight: 600;
   color: var(--primary-color);
   margin-bottom: 1rem;
+  display: block;
 }
 
 .elig-input {
@@ -93,12 +90,14 @@ body {
 
 .elig-input:focus {
   outline: 1.5px solid var(--primary-color);
+  outline-offset: 0;
 }
 
 .elig-input:focus-visible {
   outline: 1.5px solid var(--primary-color);
 }
 
+/* tbc */
 .elig-input:target {
   border: 1px solid yellow;
 }
@@ -144,6 +143,10 @@ div.loading {
   cursor: pointer;
 }
 
+.elig-button:focus {
+  outline: none;
+}
+
 .elig-button-secondary {
   background-color: white;
   color: var(--primary-color);
@@ -177,13 +180,34 @@ div.loading {
 }
 
 .elig-ul {
-  font-size: 1.5rem;
-  color: var(--text-color);
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
   margin-top: 16px;
   margin-bottom: 16px;
+  padding: 0;
+}
+
+.elig-li-wrapper {
+  width: fit-content;
+  padding-left: 20px;
+  padding-right: 16px;
+}
+
+.elig-li {
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.elig-success-svg {
+  display: inline-block;
+  background-image: url("./assets/HFCU_Emotes_RGB_Full Color_Laughter.svg");
+  background-size: 100%;
+  width: 50px;
+  height: 50px;
+  transform: rotate(-10deg);
 }
 
 .elig-a {
@@ -193,6 +217,7 @@ div.loading {
   line-height: 1.5rem;
   padding: 16px 16px;
   min-width: 5rem;
+  text-decoration: underline;
 }
 
 .elig-h4 {

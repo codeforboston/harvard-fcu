@@ -13,7 +13,7 @@ const NotEligiblePage: React.FC<Props> = (props: Props) => {
 
     return (
         <>
-            <h3 className='elig-h3'>
+            <h3 id='elig-h3'>
                 Sadly, that address is outside of our coverage area. But don't worry, there are still other options!
             </h3>
             <p className='elig-p'>
