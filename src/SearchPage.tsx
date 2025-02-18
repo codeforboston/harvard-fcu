@@ -17,19 +17,26 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Update the input value on fetching the address
-  const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult) => {
+  const handlePlaceChange = useCallback(async (place: google.maps.places.PlaceResult) => {
     // Parse a given Autocomplete prediction
-    // TO-DO: check if it makes sense to refactor it using place.fetchFields()
     const addressComponentsToDisplay = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
-    const addressPieces: string[] = [];
     // TO-DO: refactor to use code in Find My Location
-    // if street address is empty, get address by coordinates
+    const addressPieces: string[] = [];
     place.address_components?.forEach(component => {
       if (addressComponentsToDisplay.includes(component.types[0])) addressPieces.push(component.long_name);
     })
     if (inputRef.current && addressPieces.length){
+      // Handle edge case: if street address is empty, get address by coordinates. Example for testing: "North Shore Community College - Career Services Lynn, MA, USA"
+      if (addressPieces.length <= 3 && place.geometry && place.geometry.location) {
+        const matched = await reverseGeocode({ 
+          lng: place.geometry.location.lng(),
+          lat: place.geometry.location.lat(),
+        });
+        inputRef.current.value = matched.formatted_address;
+      } else {
         inputRef.current.value = addressPieces.join(', ');
       }
+    }
   }, [])
 
   // Handle the form submission for geocoding request
