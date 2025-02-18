@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
-import { geocode, lookupCoords, reverseGeocode } from './util/census';
-import { CensusApiResponse, CensusCoordsApiResponse, EligibilityAppStates } from './types';
+import { geocode, reverseGeocode } from './util/census';
+import { CensusAddressMatch, EligibilityAppStates, CensusTractData } from './types';
 import EligibleTracts from './data/tracts';
 import AddressBox from './AddressBox';
 
@@ -14,48 +14,60 @@ type Props = {
 
 const SearchPage: React.FC<Props> = (props: Props) => {
   const { setPageState } = props;
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const getAddressByCoords = async (longitude: number, latitude: number) => {
+    const matched = await reverseGeocode({ 
+      lng: longitude,
+      lat: latitude,
+    });
+    if (inputRef.current) {
+      inputRef.current.value = matched.formatted_address;
+    }
+  };
 
   // Update the input value on fetching the address
   const handlePlaceChange = useCallback(async (place: google.maps.places.PlaceResult) => {
     // Parse a given Autocomplete prediction
     const addressComponentsToDisplay = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
-    // TO-DO: refactor to use code in Find My Location
     const addressPieces: string[] = [];
     place.address_components?.forEach(component => {
       if (addressComponentsToDisplay.includes(component.types[0])) addressPieces.push(component.long_name);
     })
+
     if (inputRef.current && addressPieces.length){
-      // Handle edge case: if street address is empty, get address by coordinates. Example for testing: "North Shore Community College - Career Services Lynn, MA, USA"
       if (addressPieces.length <= 3 && place.geometry && place.geometry.location) {
-        const matched = await reverseGeocode({ 
-          lng: place.geometry.location.lng(),
-          lat: place.geometry.location.lat(),
-        });
-        inputRef.current.value = matched.formatted_address;
+        // Handle edge case: if street address is empty, get address by coordinates. Example for testing: "North Shore Community College - Career Services Lynn, MA, USA"
+        getAddressByCoords(place.geometry.location.lng(), place.geometry.location.lat());
       } else {
         inputRef.current.value = addressPieces.join(', ');
       }
     }
-  }, [])
+  }, []);
 
   // Handle the form submission for geocoding request
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     const address = inputRef.current?.value || '';
-
     if (address.length <= 1) {
       setPageState("incorrect_address");
       return;
     }
+
     setPageState("loading");
+
     try {
       // Retrieve geocoding data for the given address
       const censusApiResponse = await geocode({ address });
+      const addressMatches = censusApiResponse.result.addressMatches;
+
+      if (!addressMatches || addressMatches.length == 0) {
+        setPageState("incorrect_address");
+      }
 
       // Find out if address is eligible and update the page state
-      const addressIsEligible = !!(censusApiResponse && findEligibleAddress(censusApiResponse));
+      const addressIsEligible = determineEligibility(addressMatches);
       setPageState(addressIsEligible ? "eligible" : "not_eligible");
     }
     catch (error) {
@@ -65,31 +77,21 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   }
 
   // Process Census API response and find eligible address, if any.
-  function findEligibleAddress(result: CensusApiResponse) {
-    const addressMatches = result.result.addressMatches;
-
-    // TO-DO: set state to incorrect_address when addressMatches array is empty
-    // if (addressMatches.length == 0) {
-    //   setPageState("incorrect_address"); // error state
-    // }
-
-    for (const address of addressMatches) { // Check if there is at least one address match and that it contains Census Tract information
+  function determineEligibility(addressMatches: CensusAddressMatch[]) {
+    for (const address of addressMatches) {
       const tractData = address.geographies["Census Tracts"];
-      
       // Verify that Census Tract information is available
       if (tractData && tractData.length > 0) {
-        const tractValue = tractData[0].GEOID;
-
         // Check if the tractValue is in the eligible tracts list
-        if (EligibleTracts.includes(tractValue))
-          return address;
+        if (hasEligibleCensusTract(tractData))
+          return true;
       }
     }
-    return null;
+    return false;
   }
 
-  function hasEligibleCensusBlock(result: CensusCoordsApiResponse) {
-    return !!result.result.geographies['Census Tracts'].find(t => EligibleTracts.includes(t.GEOID));
+  function hasEligibleCensusTract(tractData: CensusTractData) {
+    return !!tractData.find(t => EligibleTracts.includes(t.GEOID));
   }
 
   async function getCurrentPosition() {
@@ -114,25 +116,9 @@ const SearchPage: React.FC<Props> = (props: Props) => {
             onClick={async () => {
               if (!navigator.geolocation)
                 throw 'Geolocation API unavailable';
-              // TO-DO: handle the case when addressMatches is undefined
               const position = await getCurrentPosition();
-              const matched = await reverseGeocode({ 
-                lng: position.coords.longitude,
-                lat: position.coords.latitude,
-              });
-
-              if (inputRef.current)
-                inputRef.current.value = matched.formatted_address;
-
-              const censusApiResponse = await lookupCoords({ 
-                lng: position.coords.longitude,
-                lat: position.coords.latitude,
-              });
-
-              // Find out if address is eligible and update the page state
-              const addressIsEligible = !!(censusApiResponse && hasEligibleCensusBlock(censusApiResponse));
-              setPageState(addressIsEligible ? "eligible" : "not_eligible");
-            }}>
+              getAddressByCoords(position.coords.longitude, position.coords.latitude);
+          }}>
             <div className='elig-location-svg'></div>
             Use My Location
           </button>
