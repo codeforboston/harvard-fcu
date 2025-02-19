@@ -1,6 +1,7 @@
 import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { CSSProperties, forwardRef, useEffect, useRef } from "react";
 
+
 type Props = {
     style?: CSSProperties,
     className?: string,
@@ -52,11 +53,11 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
         }} {...props} />
     )
 })
-
+const googleAPIKey = (import.meta.env.VITE_API_KEY)
 const AddressBox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
         // TO-DO: create a .env file to store the apiKey in
-        <APIProvider apiKey="AIzaSyDwmsT7zb6teXmmQj37OcwCKtP4S8R26Ks">
+        <APIProvider apiKey={googleAPIKey}>
             <AutocompleteInput {...props} ref={ref} />
         </APIProvider>
     )
