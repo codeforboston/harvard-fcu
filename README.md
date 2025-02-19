@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+# Havard FCU Membership Eligibility Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This code was written in React + TypeScript + Vite, by **Code For Boston**, a non-profit grassroots organization run by volunteers
 
-Currently, two official plugins are available:
+## Where is the code stored and how do we access it if we need to make changes?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The code is stored on this Github repo, it is then injected into the WordPress dev site ( https://huecu2020.insegment.com/membership-old/eligibility/).  The entire functionality is contained in the above repo, however, changes to WordPress styling may affect the visual appearance of the page.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Code injected into WPbakery page builder as raw HTML
+```html
+<div id="eligibility-root"></div>
+<script src="https://codeforboston.github.io/harvard-fcu/assets/index.js" type="module" ></script>
+<link rel="stylesheet" href="https://codeforboston.github.io/harvard-fcu/assets/index.css">
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Where are visual assets stored?
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+The '/assets' folder in this repo
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## How would I move the features you built to another CMS if we decide to move away from WordPress
+
+Copy the raw HTML from the WPbakery page builder and inject it into the respective section of your new CMS.
+
+
+## How do I change/update things like the test of messages and other visual elements?
+
+Locate visual elements or test messages, update them accordingly, and submit a pull request to this repo.
+
+## What APIs are in use and how do we check/maintain them if they stop working?
+
+U.S. Census Bureau’s Geocoding Services Web API;
+Census Geocoding API URLs for reference
+https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress
+https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html
+
+Google Maps API ([https://console.cloud.google.com/](https://developers.google.com/maps/documentation/javascript/reference/))
+
+## How did we resolve the analytics issue?
+TBD
