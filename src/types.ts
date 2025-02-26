@@ -55,9 +55,9 @@ export type CensusAddressMatch = {
     matchedAddress: string
 };
 
-export type CensusTractData = [{
+export type CensusTractData = {
     "GEOID": string,
-}];
+}[];
 
 export type CensusApiResponse = {
     result: {

@@ -17,14 +17,14 @@ const EligiblePage: React.FC<Props> = () => {
             </p>
             <ul className='elig-ul'>
                 <div className='elig-li-wrapper'>
-                    <li>Valid Social Security #</li>
-                    <li>Valid government issued ID #</li>
-                    <li>Date of Birth</li>
+                    <li className='elig-li'>Valid Social Security #</li>
+                    <li className='elig-li'>Valid government issued ID #</li>
+                    <li className='elig-li'>Date of Birth</li>
                 </div>
                 <div className='elig-li-wrapper'>
-                    <li>Address, Email address and phone number</li>
-                    <li>Work ID (if applicable)</li>
-                    <li>Your mobile phone</li>
+                    <li className='elig-li'>Address, Email address and phone number</li>
+                    <li className='elig-li'>Work ID (if applicable)</li>
+                    <li className='elig-li'>Your mobile phone</li>
                 </div>
                 <div className='elig-li-wrapper'>
                     <div className='elig-success-svg'></div>
