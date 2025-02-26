@@ -31,12 +31,16 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     // Parse a given Autocomplete prediction
     const addressComponentsToDisplay = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
     const addressPieces: string[] = [];
+    let streetAddressDataCount = 0;
     place.address_components?.forEach(component => {
+      if (component.types[0] == 'street_number' || component.types[0] == 'route') {
+        if (component.long_name) streetAddressDataCount++;
+      }
       if (addressComponentsToDisplay.includes(component.types[0])) addressPieces.push(component.long_name);
     })
 
     if (inputRef.current && addressPieces.length){
-      if (addressPieces.length <= 3 && place.geometry && place.geometry.location) {
+      if (streetAddressDataCount < 2 && place.geometry && place.geometry.location) {
         // Handle edge case: if street address is empty, get address by coordinates. Example for testing: "North Shore Community College - Career Services Lynn, MA, USA"
         getAddressByCoords(place.geometry.location.lng(), place.geometry.location.lat());
       } else {
@@ -105,7 +109,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
       <form className='elig-form' onSubmit={handleSubmit} >
         <label className='elig-label' htmlFor='address'>Street Address</label>
         <AddressBox className='elig-input' 
-                    placeholder='Enter your address here...' 
+                    placeholder='Enter the address' 
                     onPlaceChanged={handlePlaceChange}
                     name='address'
                     id='address'
