@@ -11,13 +11,14 @@ import SearchPageHeading from './SearchPageHeading';
 
 function App() {
   const [eligibilityAppState, setEligibilityAppState] = useState<EligibilityAppStates>("search");
+  const [address, setAddress] = useState<string>("");
 
   const renderPage = () => {
     switch (eligibilityAppState) {
       case 'search':
         return <>
           <SearchPageHeading/>
-          <SearchPage setPageState={setEligibilityAppState}/>
+          <SearchPage setPageState={setEligibilityAppState} setAddress={setAddress}/>
         </>
       case 'loading':
         return <>
@@ -27,12 +28,12 @@ function App() {
       case 'incorrect_address':
         return <>
           <IncorrectAddressPageHeading/>
-          <SearchPage setPageState={setEligibilityAppState}/>
+          <SearchPage setPageState={setEligibilityAppState} setAddress={setAddress}/>
         </>
       case 'eligible':
         return <EligiblePage/>
       case 'not_eligible':
-        return <NotEligiblePage setPageState={setEligibilityAppState} />
+        return <NotEligiblePage setPageState={setEligibilityAppState} address={address} />
       case 'error':
         return <ErrorPage/>
       default:

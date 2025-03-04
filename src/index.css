@@ -63,6 +63,13 @@ body {
   margin-bottom: 0;
 }
 
+.elig-address {
+  font-size: small;
+  font-style: italic;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+
 .elig-form {
   margin-top: 16px;
 }

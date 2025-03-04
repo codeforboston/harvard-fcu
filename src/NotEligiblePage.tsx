@@ -4,18 +4,20 @@ import useScrollOnRender from './hooks/useScrollOnRender';
 
 type Props = {
     setPageState: React.Dispatch<React.SetStateAction<EligibilityAppStates>>;
+    address: string;
   }
 
 const ffaUrl = 'https://financialfitnessassociation.org'
 
 const NotEligiblePage: React.FC<Props> = (props: Props) => {
-    const { setPageState } = props;
+    const { setPageState, address } = props;
     const headingRef = useScrollOnRender();
     return (
         <>
             <h3 id='elig-h3' ref={headingRef}>
                 Sadly, that address is outside of our coverage area. But don't worry, there are still other options!
             </h3>
+            {address && <p className='elig-p elig-address'>The address you entered: {address}</p>}
             <p className='elig-p'>
                 You can also qualify by your workplace, school, or place of worship! If you haven't checked those, try again to see if you qualify!
             </p>
