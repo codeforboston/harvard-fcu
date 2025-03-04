@@ -1,4 +1,5 @@
 import * as React from "react";
+import useScrollOnRender from './hooks/useScrollOnRender';
 
 type Props = React.PropsWithChildren<object>;
 
@@ -6,10 +7,10 @@ const joinTodayUrl = 'https://app.loanspq.com/xa/xpressApp.aspx?enc=Kw21Wblm1yxp
 const learnMoreAboutMemberships = 'https://harvardfcu.org/membership/join/'
 
 const EligiblePage: React.FC<Props> = () => {
-    // TO-DO: success svg is not displayed on page
+    const headingRef = useScrollOnRender();
     return (
         <>
-            <h3 id='elig-h3'>
+            <h3 id='elig-h3' ref={headingRef}>
                 Congrats! It looks like you are eligible for membership! 
             </h3>
             <p className='elig-p'>
@@ -30,8 +31,8 @@ const EligiblePage: React.FC<Props> = () => {
                     <div className='elig-success-svg'></div>
                 </div>
             </ul>
-            <div className='elig-button-wrapper'>
-                <a href = {joinTodayUrl} target="_blank">
+            <div className='elig-button-and-link-wrapper'>
+                <a id='elig-jointoday-a' href = {joinTodayUrl} target="_blank">
                     <button className='elig-button' type='button'>{'Join Today! >'}</button>
                 </a>
                 <a className='elig-a' href={learnMoreAboutMemberships} target="_blank">Learn More About Memberships</a>

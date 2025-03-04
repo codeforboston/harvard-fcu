@@ -19,8 +19,11 @@
   .eligibilityBox {
     max-width: 540px;
   }
-  .elig-a {
-    padding-left: 16px;
+}
+@media (max-width: 409px) {
+  .elig-two-buttons-wrapper button {
+    padding: 8.5px 16px;
+    width: 200px;
   }
 }
 
@@ -60,6 +63,13 @@ body {
   margin-bottom: 0;
 }
 
+.elig-address {
+  font-size: small;
+  font-style: italic;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+
 .elig-form {
   margin-top: 16px;
 }
@@ -97,7 +107,6 @@ body {
   outline: 1.5px solid var(--primary-color);
 }
 
-/* tbc */
 .elig-input:target {
   border: 1px solid yellow;
 }
@@ -115,12 +124,21 @@ div.loading {
   width: 50px;
 }
 
-.elig-button-wrapper {
+.elig-two-buttons-wrapper {
   display: flex;
   margin-top: 8px;
   flex-wrap: wrap;
   justify-content: start;
-  gap: 1rem;
+  gap: 8px;
+}
+
+.elig-button-and-link-wrapper {
+  display: flex;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  justify-content: start;
+  column-gap: 16px;
+  row-gap: 8px;
 }
 
 .elig-button {
@@ -134,13 +152,20 @@ div.loading {
   font-weight: 600;
   font-family: "Poppins";
   line-height: 1.8rem;
-  padding: 8.5px 22px;
+  padding: 8.5px 20px;
   border-radius: 22px;
   border: 2px solid var(--primary-color);
   background-color: var(--primary-color);
+  cursor: pointer;
   -webkit-transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-  cursor: pointer;
+}
+
+.elig-button:hover {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  -webkit-transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .elig-button:focus {
@@ -183,7 +208,7 @@ div.loading {
   display: flex;
   flex-wrap: wrap;
   margin-top: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   padding: 0;
 }
 
@@ -196,22 +221,22 @@ div.loading {
 .elig-li {
   color: var(--text-color);
   font-size: 14px;
-  line-height: 1.15;
+  line-height: 1.5;
   margin: 0;
   padding: 0;
 }
 
 .elig-success-svg {
   display: inline-block;
-  background-image: url("./assets/HFCU_Emotes_RGB_Full Color_Laughter.svg");
+  background-image: url("./assets/HFCU_Emotes_RGB_Full_Color_Laughter.svg");
   background-size: 100%;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   transform: rotate(-10deg);
 }
 
 .elig-wonder-svg {
-  background-image: url("./assets/HFCU_Emotes_RGB_Full Color_Wonder.svg");
+  background-image: url("./assets/HFCU_Emotes_RGB_Full_Color_Wonder.svg");
   background-size: 110%;
   width: 70px;
   height: 70px;
@@ -228,7 +253,11 @@ div.loading {
   text-decoration: underline;
 }
 
-.elig-h4 {
+#elig-jointoday-a {
+  margin-right: 0;
+}
+
+#elig-h4 {
   font-size: 1.9rem !important;
   font-family: "Poppins";
   color: var(--primary-color);

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import LoadingImage from '../assets/loading.gif';
+import LoadingImage from './assets/loading.gif';
 
 type Props = React.PropsWithChildren<object>;
 

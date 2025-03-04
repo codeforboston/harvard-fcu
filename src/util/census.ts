@@ -42,7 +42,7 @@ export async function lookupCoords(opts: LookupCoordsOptions) {
 
 // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
 export async function reverseGeocode(coords: LookupCoordsOptions) {
-  const url = 'https://maps.googleapis.com/maps/api/geocode/json?' + encodeQueryParams({ latlng: coords.lat + ',' + coords.lng, key: 'AIzaSyCdouiCnCfm6bg7zZ2uYqF7Id_AFmf3EH4' });
+  const url = 'https://maps.googleapis.com/maps/api/geocode/json?' + encodeQueryParams({ latlng: coords.lat + ',' + coords.lng, key: (import.meta.env.VITE_API_KEY) });
   // ;
 
   const data = await fetch(url).then(r => r.json());
