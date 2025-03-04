@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { EligibilityAppStates } from './types';
-import './App.css';
 
 import SearchPage from './SearchPage';
 import EligiblePage from './EligiblePage';
@@ -10,7 +9,6 @@ import ErrorPage from './ErrorPage';
 import IncorrectAddressPageHeading from './IncorrectAddressPageHeading';
 import SearchPageHeading from './SearchPageHeading';
 
-// Main App component
 function App() {
   const [eligibilityAppState, setEligibilityAppState] = useState<EligibilityAppStates>("search");
 

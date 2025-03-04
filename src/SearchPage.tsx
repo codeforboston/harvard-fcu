@@ -114,7 +114,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
                     name='address'
                     id='address'
                     ref={inputRef} />
-        <div className='elig-button-wrapper'>
+        <div className='elig-two-buttons-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
           <button className={'elig-button elig-button-secondary'} type='button'
             onClick={async () => {
