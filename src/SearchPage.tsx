@@ -10,10 +10,11 @@ import AddressBox from './AddressBox';
 
 type Props = {
   setPageState: React.Dispatch<React.SetStateAction<EligibilityAppStates>>;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SearchPage: React.FC<Props> = (props: Props) => {
-  const { setPageState } = props;
+  const { setPageState, setAddress } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const getAddressByCoords = async (longitude: number, latitude: number) => {
@@ -21,13 +22,13 @@ const SearchPage: React.FC<Props> = (props: Props) => {
       lng: longitude,
       lat: latitude,
     });
-    if (inputRef.current) {
+    if (inputRef.current && matched) {
       inputRef.current.value = matched.formatted_address;
     }
   };
 
   // Update the input value on fetching the address
-  const handlePlaceChange = useCallback(async (place: google.maps.places.PlaceResult) => {
+  const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult) => {
     // Parse a given Autocomplete prediction
     const addressComponentsToDisplay = ['street_number', 'route', 'neighborhood', 'locality', 'postal_code'];
     const addressPieces: string[] = [];
@@ -54,6 +55,8 @@ const SearchPage: React.FC<Props> = (props: Props) => {
     e.preventDefault();
 
     const address = inputRef.current?.value || '';
+    setAddress(address);
+    
     if (address.length <= 1) {
       setPageState("incorrect_address");
       return;
@@ -114,7 +117,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
                     name='address'
                     id='address'
                     ref={inputRef} />
-        <div className='elig-button-wrapper'>
+        <div className='elig-two-buttons-wrapper'>
           <button className='elig-button' type='submit'>Search Address</button>
           <button className={'elig-button elig-button-secondary'} type='button'
             onClick={async () => {

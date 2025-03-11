@@ -56,7 +56,6 @@ const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
 const googleAPIKey = (import.meta.env.VITE_API_KEY)
 const AddressBox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
-        // TO-DO: create a .env file to store the apiKey in
         <APIProvider apiKey={googleAPIKey}>
             <AutocompleteInput {...props} ref={ref} />
         </APIProvider>
