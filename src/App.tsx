@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { EligibilityAppStates } from './types';
-
 import SearchPage from './SearchPage';
 import EligiblePage from './EligiblePage';
 import NotEligiblePage from './NotEligiblePage';

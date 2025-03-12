@@ -1,5 +1,5 @@
-import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
-import { CSSProperties, forwardRef, useEffect, useRef } from "react";
+import { CSSProperties, forwardRef, useEffect, useRef, useState, } from "react";
+import { Loader } from '@googlemaps/js-api-loader';
 
 
 type Props = {
@@ -13,53 +13,79 @@ type Props = {
     id?: string
 }
 
+const loader = new Loader({
+  apiKey: import.meta.env.VITE_API_KEY,
+  version: 'beta',
+  libraries: ['places'],
+});
+
+function usePromise<T>(p: Promise<T>) {
+  const [val, setVal] = useState<T | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    p.then((v) => {
+      if (mounted)
+        setVal(() => v);
+    });
+
+    return () => { mounted = false; };
+  }, [p]);
+
+  return val;
+}
+
+function useSearchBox() {
+  return usePromise(loader.importLibrary('places').then(l => l.SearchBox));
+}
+
 const AutocompleteInput = forwardRef<HTMLInputElement, Props>((props_, ref) => {
-    const { onPlaceChanged, ...props } = props_;
-    const places = useMapsLibrary('places');
-    const inputRef = useRef<HTMLInputElement | undefined>(undefined);
-    
-    useEffect(() => {
-        if (!places || !inputRef.current) 
-            return;
+  const { onPlaceChanged, ...props } = props_;
 
-        // instantiate a Place prediction widget that attaches to input field
-        const placesWidget = new places.Autocomplete(inputRef.current, {
-            strictBounds: true,
-            bounds: {
-                south: 42.23286,
-                west: -71.22737,
-                north: 42.50599,
-                east: -70.89242
-            }
-        });
+  const inputRef = useRef<HTMLInputElement | undefined>(undefined);
+  const SearchBox = useSearchBox();
+  useEffect(() => {
+    if (!SearchBox || !inputRef.current)
+      return;
 
-        // 'place_changed' event fires when user selects a place from the drop-down list of autosuggestions. For reference, see:
-        // https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete.place_changed
-        placesWidget.addListener('place_changed', () => {
-            const place = placesWidget.getPlace();
-            onPlaceChanged?.(place);
-        });
-    }, [places, onPlaceChanged]);
+    // instantiate a Place prediction widget that attaches to input field
+    const placesWidget = new SearchBox(inputRef.current, {
+      bounds: {
+        south: 42.23286,
+        west: -71.22737,
+        north: 42.50599,
+        east: -70.89242
+      }
+    });
 
-    return (
-        <input ref={(input) => {
-            inputRef.current = input || undefined;
-            if (ref) {
-                if (typeof ref === 'function')
-                    ref(input);
-                else
-                    ref.current = input;
-            }
-        }} {...props} />
-    )
-})
-const googleAPIKey = (import.meta.env.VITE_API_KEY)
+    // 'place_changed' event fires when user selects a place from the drop-down list of autosuggestions.
+    placesWidget.addListener('place_changed', () => {
+      const places = placesWidget.getPlaces();
+      console.log('places', places);
+      if (places)
+        onPlaceChanged?.(places[0]);
+    });
+
+  }, [SearchBox, onPlaceChanged]);
+
+  return (
+    <input ref={(input) => {
+      inputRef.current = input || undefined;
+      if (ref) {
+        if (typeof ref === 'function')
+          ref(input);
+        else
+          ref.current = input;
+      }
+    }} {...props} />
+  )
+});
+
 const AddressBox = forwardRef<HTMLInputElement, Props>((props, ref) => {
     return (
-        <APIProvider apiKey={googleAPIKey}>
-            <AutocompleteInput {...props} ref={ref} />
-        </APIProvider>
+        <AutocompleteInput {...props} ref={ref} />
     )
-})
+});
 
 export default AddressBox;
