@@ -1,5 +1,5 @@
 import { CSSProperties, forwardRef, useEffect, useRef, useState, } from "react";
-import { Loader } from '@googlemaps/js-api-loader';
+import loader from './util/googloader';
 
 
 type Props = {
@@ -12,12 +12,6 @@ type Props = {
     name?: string
     id?: string
 }
-
-const loader = new Loader({
-  apiKey: import.meta.env.VITE_API_KEY,
-  version: 'beta',
-  libraries: ['places'],
-});
 
 function usePromise<T>(p: Promise<T>) {
   const [val, setVal] = useState<T | null>(null);

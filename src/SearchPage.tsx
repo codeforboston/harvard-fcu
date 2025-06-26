@@ -18,7 +18,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const getAddressByCoords = async (longitude: number, latitude: number) => {
-    const matched = await reverseGeocode({ 
+    const matched = await reverseGeocode({
       lng: longitude,
       lat: latitude,
     });
@@ -56,7 +56,7 @@ const SearchPage: React.FC<Props> = (props: Props) => {
 
     const address = inputRef.current?.value || '';
     setAddress(address);
-    
+
     if (address.length <= 1) {
       setPageState("incorrect_address");
       return;

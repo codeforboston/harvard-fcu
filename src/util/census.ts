@@ -1,5 +1,6 @@
 import { CensusApiResponse, CensusCoordsApiResponse } from '../types';
-import { encodeQueryParams, loadJsonp } from './jsonp';
+import { loadJsonp } from './jsonp';
+import loader from './googloader';
 
 const Url = "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress";
 
@@ -42,9 +43,12 @@ export async function lookupCoords(opts: LookupCoordsOptions) {
 
 // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
 export async function reverseGeocode(coords: LookupCoordsOptions) {
-  const url = 'https://maps.googleapis.com/maps/api/geocode/json?' + encodeQueryParams({ latlng: coords.lat + ',' + coords.lng, key: (import.meta.env.VITE_API_KEY) });
-  // ;
-
-  const data = await fetch(url).then(r => r.json());
-  return data.results.find((result: any) => (result.types.includes('premise')))
+  return loader.importLibrary('geocoding').then(l => {
+    return new l.Geocoder().geocode({
+      location: {
+        lat: coords.lat,
+        lng: coords.lng
+      }
+    }).then(resp => resp.results.find((result) => result.types.includes('premise')))
+  });
 }
